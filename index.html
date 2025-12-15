@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WealthLens</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- Background rupee symbols -->
+  <div class="rupee r1">₹</div>
+  <div class="rupee r2">₹</div>
+
+  <div class="app-container">
+
+    <!-- HERO -->
+    <header class="hero">
+      <h1 class="title">WealthLens</h1>
+      <p class="subtitle"><strong>See your true investment returns</strong></p>
+    </header>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="sip">SIP Calculator</button>
+      <button class="tab-btn" data-tab="compare">Compare Strategies</button>
+    </div>
+
+    <!-- ================= SIP TAB ================= -->
+    <div id="sip" class="tab-content active">
+      <div class="card-layout">
+
+        <!-- INPUT CARD -->
+        <div class="card">
+
+          <div class="input-group">
+            <label>Monthly Investment (₹)</label>
+            <input type="number" id="monthlyAmountBox" value="5000">
+            <input type="range" id="monthlyAmount" min="500" max="100000" step="500" value="5000">
+          </div>
+
+          <div class="input-group">
+            <label>Expected Return (% p.a)</label>
+            <input type="number" id="expectedReturnBox" value="12">
+            <input type="range" id="expectedReturn" min="0" max="20" step="0.5" value="12">
+          </div>
+
+          <div class="input-group">
+            <label>Time Period (Years)</label>
+            <input type="number" id="yearsBox" value="10">
+            <input type="range" id="years" min="1" max="30" value="10">
+          </div>
+
+          <div class="input-group">
+            <label>Step-up SIP (% p.a)</label>
+            <input type="number" id="stepUpBox" value="10">
+            <input type="range" id="stepUp" min="0" max="20" value="10">
+          </div>
+
+          <div class="input-group">
+            <label>Inflation Rate (% p.a)</label>
+            <input type="number" id="inflationBox" value="6">
+            <input type="range" id="inflation" min="0" max="10" step="0.5" value="6">
+          </div>
+
+          <div class="input-row">
+            <div class="input-group">
+              <label>Expense Ratio (% p.a)</label>
+              <input type="number" id="expenseRatioBox" value="1">
+            </div>
+
+            <div class="input-group">
+              <label>Exit Load (%)</label>
+              <input type="number" id="exitLoadBox" value="1">
+            </div>
+          </div>
+
+          <button id="calculateBtn" class="primary-btn">Calculate</button>
+        </div>
+
+        <!-- RESULT CARD -->
+        <div class="card result-card">
+
+          <!-- Chart -->
+          <div class="chart-wrapper">
+            <canvas id="resultChart"></canvas>
+          </div>
+
+          <!-- RESULTS (A) -->
+          <div class="results">
+
+            <div class="real-value-box">
+              <span class="label">Real Value (After Inflation)</span>
+              <span class="amount">₹ <span id="realValue">0</span></span>
+            </div>
+
+            <div class="metrics-grid">
+              <div class="metric">
+                <span class="label">Final Value</span>
+                <span class="value">₹ <span id="finalValue">0</span></span>
+              </div>
+
+              <div class="metric">
+                <span class="label">Returns</span>
+                <span class="value">₹ <span id="returnsValue">0</span></span>
+              </div>
+
+              <div class="metric">
+                <span class="label">Total Invested</span>
+                <span class="value">₹ <span id="totalInvested">0</span></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- HIDDEN COSTS (B) -->
+          <div class="cost-box">
+            <h3>Hidden Cost Breakdown</h3>
+         <div class="total-hidden-box">
+         <span class="label">Total Hidden Cost</span>
+         <span class="amount">₹ <span id="totalHiddenCost">0</span></span>
+        </div>
+
+            <div class="cost-grid">
+             <div class="cost-item">
+  <span>Expense Ratio Cost</span>
+  <strong class="cost-amount">
+    <span class="rupee-symbol">₹</span>
+    <span id="expenseCost">0</span>
+  </strong>
+</div>
+
+<div class="cost-item">
+  <span>Exit Load Paid</span>
+  <strong class="cost-amount">
+    <span class="rupee-symbol">₹</span>
+    <span id="exitCost">0</span>
+  </strong>
+</div>
+
+<div class="cost-item">
+  <span>Inflation Erosion</span>
+  <strong class="cost-amount">
+    <span class="rupee-symbol">₹</span>
+    <span id="inflationCost">0</span>
+  </strong>
+</div>
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= COMPARE TAB ================= -->
+    <div id="compare" class="tab-content">
+      <div class="card-layout">
+
+        <div class="card">
+          <h3>Strategy A</h3>
+          <input type="number" id="a_expense" value="1" placeholder="Expense Ratio %">
+          <input type="number" id="a_exit" value="1" placeholder="Exit Load %">
+          <input type="number" id="a_tax" value="10" placeholder="Tax %">
+          <p>Final Value: ₹ <strong id="a_final">—</strong></p>
+        </div>
+
+        <div class="card">
+          <h3>Strategy B</h3>
+          <input type="number" id="b_expense" value="0.2">
+          <input type="number" id="b_exit" value="0">
+          <input type="number" id="b_tax" value="10">
+          <p>Final Value: ₹ <strong id="b_final">—</strong></p>
+        </div>
+
+      </div>
+
+      <p class="difference">
+      Wealth Difference: ₹ <strong id="difference" class="difference-amount">—</strong>
+      </p>
+
+
+      <button id="compareBtn" class="primary-btn">Compare Strategies</button>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
