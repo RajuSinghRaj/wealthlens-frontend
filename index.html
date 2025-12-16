@@ -77,6 +77,12 @@
           </div>
 
           <button id="calculateBtn" class="primary-btn">Calculate</button>
+
+          <!-- ✅ ADDED: SIP PDF BUTTON -->
+          <button id="pdfSipBtn" class="primary-btn" style="margin-top:10px;">
+            Save SIP Report as PDF
+          </button>
+
         </div>
 
         <!-- RESULT CARD -->
@@ -116,36 +122,37 @@
           <!-- HIDDEN COSTS (B) -->
           <div class="cost-box">
             <h3>Hidden Cost Breakdown</h3>
-         <div class="total-hidden-box">
-         <span class="label">Total Hidden Cost</span>
-         <span class="amount">₹ <span id="totalHiddenCost">0</span></span>
-        </div>
+
+            <div class="total-hidden-box">
+              <span class="label">Total Hidden Cost</span>
+              <span class="amount">₹ <span id="totalHiddenCost">0</span></span>
+            </div>
 
             <div class="cost-grid">
-             <div class="cost-item">
-  <span>Expense Ratio Cost</span>
-  <strong class="cost-amount">
-    <span class="rupee-symbol">₹</span>
-    <span id="expenseCost">0</span>
-  </strong>
-</div>
 
-<div class="cost-item">
-  <span>Exit Load Paid</span>
-  <strong class="cost-amount">
-    <span class="rupee-symbol">₹</span>
-    <span id="exitCost">0</span>
-  </strong>
-</div>
+              <div class="cost-item">
+                <span>Expense Ratio Cost</span>
+                <strong class="cost-amount">
+                  <span class="rupee-symbol">₹</span>
+                  <span id="expenseCost">0</span>
+                </strong>
+              </div>
 
-<div class="cost-item">
-  <span>Inflation Erosion</span>
-  <strong class="cost-amount">
-    <span class="rupee-symbol">₹</span>
-    <span id="inflationCost">0</span>
-  </strong>
-</div>
+              <div class="cost-item">
+                <span>Exit Load Paid</span>
+                <strong class="cost-amount">
+                  <span class="rupee-symbol">₹</span>
+                  <span id="exitCost">0</span>
+                </strong>
+              </div>
 
+              <div class="cost-item">
+                <span>Inflation Erosion</span>
+                <strong class="cost-amount">
+                  <span class="rupee-symbol">₹</span>
+                  <span id="inflationCost">0</span>
+                </strong>
+              </div>
 
             </div>
           </div>
@@ -177,11 +184,16 @@
       </div>
 
       <p class="difference">
-      Wealth Difference: ₹ <strong id="difference" class="difference-amount">—</strong>
+        Wealth Difference: ₹ <strong id="difference" class="difference-amount">—</strong>
       </p>
 
-
       <button id="compareBtn" class="primary-btn">Compare Strategies</button>
+
+      <!-- ✅ ADDED: COMPARE PDF BUTTON -->
+      <button id="pdfCompareBtn" class="primary-btn" style="margin-top:10px;">
+        Save Comparison as PDF
+      </button>
+
     </div>
 
   </div>

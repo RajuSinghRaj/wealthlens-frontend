@@ -208,3 +208,102 @@ $("compareBtn").onclick = async () => {
     console.error(err);
   }
 };
+document.getElementById("pdfSipBtn").onclick = () => {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  let y = 20;
+
+  // Title
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(18);
+  doc.text("WealthLens – SIP Report", 14, y);
+
+  y += 12;
+
+  // Inputs
+  doc.setFontSize(12);
+  doc.setFont("helvetica", "normal");
+
+  doc.text(`Monthly Investment: Rs ${monthlyAmount.value}`, 14, y); y += 8;
+  doc.text(`Years: ${years.value}`, 14, y); y += 8;
+  doc.text(`Expected Return: ${expectedReturn.value}%`, 14, y); y += 8;
+  doc.text(`Inflation: ${inflation.value}%`, 14, y); y += 12;
+
+  // Results
+  doc.setFont("helvetica", "bold");
+  doc.text("Results", 14, y); y += 10;
+
+  doc.setFont("helvetica", "normal");
+  doc.text(`Final Value: Rs ${finalValue.textContent}`, 14, y); y += 8;
+  doc.text(`Returns: Rs ${returnsValue.textContent}`, 14, y); y += 8;
+  doc.text(`Total Invested: Rs ${totalInvested.textContent}`, 14, y); y += 8;
+  doc.text(`Real Value (After Inflation): Rs ${realValue.textContent}`, 14, y); y += 12;
+
+  // Hidden Costs
+  doc.setFont("helvetica", "bold");
+  doc.text("Hidden Costs", 14, y); y += 10;
+
+  doc.setFont("helvetica", "normal");
+  doc.text(`Expense Ratio Cost: Rs ${expenseCost.textContent}`, 14, y); y += 8;
+  doc.text(`Exit Load: Rs ${exitCost.textContent}`, 14, y); y += 8;
+  doc.text(`Inflation Erosion: Rs ${inflationCost.textContent}`, 14, y); y += 8;
+  doc.text(`Total Hidden Cost: Rs ${totalHiddenCost.textContent}`, 14, y);
+
+  doc.save("WealthLens_SIP_Report.pdf");
+};
+document.getElementById("pdfCompareBtn").onclick = () => {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  let y = 20;
+
+  // Title
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(18);
+  doc.text("WealthLens – Strategy Comparison Report", 14, y);
+
+  y += 14;
+
+  // Common Inputs
+  doc.setFontSize(12);
+  doc.setFont("helvetica", "normal");
+
+  doc.text(`Monthly Investment: Rs ${monthlyAmount.value}`, 14, y); y += 8;
+  doc.text(`Years: ${years.value}`, 14, y); y += 8;
+  doc.text(`Expected Return: ${expectedReturn.value}%`, 14, y); y += 8;
+  doc.text(`Inflation: ${inflation.value}%`, 14, y); y += 12;
+
+  // Strategy A
+  doc.setFont("helvetica", "bold");
+  doc.text("Strategy A", 14, y); y += 10;
+
+  doc.setFont("helvetica", "normal");
+  doc.text(`Expense Ratio: ${document.getElementById("a_expense").value}%`, 14, y); y += 8;
+  doc.text(`Exit Load: ${document.getElementById("a_exit").value}%`, 14, y); y += 8;
+  doc.text(`Tax: ${document.getElementById("a_tax").value}%`, 14, y); y += 8;
+  doc.text(`Final Value: Rs ${document.getElementById("a_final").textContent}`, 14, y);
+
+  y += 14;
+
+  // Strategy B
+  doc.setFont("helvetica", "bold");
+  doc.text("Strategy B", 14, y); y += 10;
+
+  doc.setFont("helvetica", "normal");
+  doc.text(`Expense Ratio: ${document.getElementById("b_expense").value}%`, 14, y); y += 8;
+  doc.text(`Exit Load: ${document.getElementById("b_exit").value}%`, 14, y); y += 8;
+  doc.text(`Tax: ${document.getElementById("b_tax").value}%`, 14, y); y += 8;
+  doc.text(`Final Value: Rs ${document.getElementById("b_final").textContent}`, 14, y);
+
+  y += 14;
+
+  // Difference
+  doc.setFont("helvetica", "bold");
+  doc.text("Wealth Difference", 14, y); y += 10;
+
+  doc.setFont("helvetica", "normal");
+  doc.text(`Difference: Rs ${document.getElementById("difference").textContent}`, 14, y);
+
+  doc.save("WealthLens_Comparison_Report.pdf");
+};
